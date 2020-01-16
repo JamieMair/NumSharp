@@ -94,54 +94,1530 @@
             if (np1.Shape != np2.Shape)
                 throw new NumSharpException("The two specified arrays must have the same shape.");
 
-            var type1 = np1.GetData()[0].GetType();
-            var type2 = np2.GetData()[0].GetType();
-
             var returnValue = new NumSharp.Generic.NDArray<bool>(np1.Shape);
             var returnData = returnValue.GetData();
 
-            if (type1 == typeof(float) && type2 == typeof(float))
+            switch (np1.GetTypeCode)
             {
-                var data1 = np1.GetData<float>();
-                var data2 = np2.GetData<float>();
+#if _REGEN
+                
+                %foreach except(supported_dtypes, "Boolean"),except(supported_dtypes_lowercase, "bool") %
+                case NPTypeCode.#1:
+                    {
+                        var data1 = np1.GetData<#2>();
+                        switch(np2.GetTypeCode)
+                        {
+                            %foreach except(supported_dtypes, "Boolean"),except(supported_dtypes_lowercase, "bool") %
 
-                for (int i = 0; i < returnData.Count; i++)
-                {
-                    returnData[i] = data1[i] < data2[i];
+                            case NPTypeCode.#101:
+                            {
+                                var data2 = np2.GetData<#102>();
+
+                                for (int i = 0; i < returnData.Count; i++)
+                                {
+                                    returnData[i] = data1[i] < data2[i];
+                                }
+                            
+                                break;
+                             }
+                            %
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+                    
+                    
+
+                    break;
                 }
-            }
-            else if (type1 == typeof(float) && type2 == typeof(int))
-            {
+                %
 
-                var data1 = np1.GetData<float>();
-                var data2 = np2.GetData<int>();
+#else
 
-                for (int i = 0; i < returnData.Count; i++)
-                {
-                    returnData[i] = data1[i] < data2[i];
-                }
-            }
-            else if (type1 == typeof(int) && type2 == typeof(int))
-            {
 
-                var data1 = np1.GetData<int>();
-                var data2 = np2.GetData<int>();
+                case NPTypeCode.Byte:
+                    {
+                        var data1 = np1.GetData<byte>();
+                        switch (np2.GetTypeCode)
+                        {
 
-                for (int i = 0; i < returnData.Count; i++)
-                {
-                    returnData[i] = data1[i] < data2[i];
-                }
-            }
-            else if (type1 == typeof(int) && type2 == typeof(float))
-            {
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
 
-                var data1 = np1.GetData<int>();
-                var data2 = np2.GetData<float>();
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
 
-                for (int i = 0; i < returnData.Count; i++)
-                {
-                    returnData[i] = data1[i] < data2[i];
-                }
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Int16:
+                    {
+                        var data1 = np1.GetData<short>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.UInt16:
+                    {
+                        var data1 = np1.GetData<ushort>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Int32:
+                    {
+                        var data1 = np1.GetData<int>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.UInt32:
+                    {
+                        var data1 = np1.GetData<uint>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Int64:
+                    {
+                        var data1 = np1.GetData<long>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.UInt64:
+                    {
+                        var data1 = np1.GetData<ulong>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Char:
+                    {
+                        var data1 = np1.GetData<char>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Double:
+                    {
+                        var data1 = np1.GetData<double>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Single:
+                    {
+                        var data1 = np1.GetData<float>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Double:
+                                {
+                                    var data2 = np2.GetData<double>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Single:
+                                {
+                                    var data2 = np2.GetData<float>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+                case NPTypeCode.Decimal:
+                    {
+                        var data1 = np1.GetData<decimal>();
+                        switch (np2.GetTypeCode)
+                        {
+
+                            case NPTypeCode.Byte:
+                                {
+                                    var data2 = np2.GetData<byte>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int16:
+                                {
+                                    var data2 = np2.GetData<short>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt16:
+                                {
+                                    var data2 = np2.GetData<ushort>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int32:
+                                {
+                                    var data2 = np2.GetData<int>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt32:
+                                {
+                                    var data2 = np2.GetData<uint>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Int64:
+                                {
+                                    var data2 = np2.GetData<long>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.UInt64:
+                                {
+                                    var data2 = np2.GetData<ulong>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+                            case NPTypeCode.Char:
+                                {
+                                    var data2 = np2.GetData<char>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+
+
+                            case NPTypeCode.Decimal:
+                                {
+                                    var data2 = np2.GetData<decimal>();
+
+                                    for (int i = 0; i < returnData.Count; i++)
+                                    {
+                                        returnData[i] = data1[i] < data2[i];
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new IncorrectTypeException("The right hand side tensor did not have a compatible type.");
+                        }
+
+
+
+                        break;
+                    }
+#endif
+
             }
 
             return returnValue;
