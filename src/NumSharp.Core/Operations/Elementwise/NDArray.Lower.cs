@@ -8,26 +8,121 @@
         }
         public static NumSharp.Generic.NDArray<bool> operator <(NDArray np, float obj)
         {
-            var data = np.GetData();
             var returnValue = new NumSharp.Generic.NDArray<bool>(np.Shape);
+
             var returnData = returnValue.GetData();
-            var dataType = data[0].GetType();
-            if (dataType == typeof(int))
+            switch (np.GetTypeCode)
             {
-                for (int i = 0; i < data.Count; i++)
+#if _REGEN
+
+                %foreach except(supported_dtypes, "Boolean"),except(supported_dtypes_lowercase, "bool") %
+                case NPTypeCode.#1:
                 {
-                    returnData[i] = (int)data[i] < obj;
+                    var data = np.GetData<#2>();
+                    for (int i = 0; i < returnData.Count; i++)
+                    {
+                        returnData[i] = data[i] < obj;
+                    }
+                    break;
                 }
+                %
+#else
+
+                case NPTypeCode.Byte:
+                    {
+                        var data = np.GetData<byte>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Int16:
+                    {
+                        var data = np.GetData<short>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.UInt16:
+                    {
+                        var data = np.GetData<ushort>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Int32:
+                    {
+                        var data = np.GetData<int>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.UInt32:
+                    {
+                        var data = np.GetData<uint>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Int64:
+                    {
+                        var data = np.GetData<long>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.UInt64:
+                    {
+                        var data = np.GetData<ulong>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Char:
+                    {
+                        var data = np.GetData<char>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Double:
+                    {
+                        var data = np.GetData<double>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+                case NPTypeCode.Single:
+                    {
+                        var data = np.GetData<float>();
+                        for (int i = 0; i < returnData.Count; i++)
+                        {
+                            returnData[i] = data[i] < obj;
+                        }
+                        break;
+                    }
+#endif
+
+                default:
+                    throw new IncorrectTypeException("The two objects did not have a compatible type.");
             }
-            else if (dataType == typeof(float))
-            {
-                for (int i = 0; i < data.Count; i++)
-                {
-                    returnData[i] = (float)data[i] < obj;
-                }
-            }
-            else
-                throw new NumSharpException("Greater than not implemented for the array data type.");
 
             return returnValue;
         }
